@@ -1,118 +1,118 @@
-# WhatsApp Template Generator
+# Generador de Plantillas para WhatsApp
 
-A simple web application built with JavaScript to create, manage, and use reusable WhatsApp message templates.
+Una aplicación web sencilla desarrollada con JavaScript para crear, administrar y utilizar plantillas reutilizables de mensajes para WhatsApp.
 
-## Features
+## Características
 
-* Create reusable message templates.
-* Store templates in a centralized application state.
-* Display templates as cards.
-* Generate personalized messages by replacing template variables.
-* Copy generated messages to the clipboard.
+- Crear plantillas de mensajes reutilizables.
+- Almacenar las plantillas en un estado centralizado de la aplicación.
+- Mostrar las plantillas como tarjetas.
+- Generar mensajes personalizados reemplazando las variables de la plantilla.
+- Copiar los mensajes generados al portapapeles.
 
-## `Template` Class
+## Clase `Template`
 
-The `Template` class represents a single WhatsApp message template.
+La clase `Template` representa una plantilla individual de mensaje para WhatsApp.
 
-Each instance stores:
+Cada instancia almacena:
 
-* **`titulo`**: The template title.
-* **`mensaje`**: The message content, which may contain variables such as `{nombre}` and `{producto}`.
-* **`hashtag`**: The associated hashtag.
-* **`fecha`**: The creation date, automatically assigned when the template is created.
+- **`titulo`**: El título de la plantilla.
+- **`mensaje`**: El contenido del mensaje, que puede contener variables como `{nombre}` y `{producto}`.
+- **`hashtag`**: El hashtag asociado.
+- **`fecha`**: La fecha de creación, asignada automáticamente cuando se crea la plantilla.
 
-Example:
+Ejemplo:
 
 ```javascript
 const plantilla = new Template(
-  "Welcome",
-  "Hello {nombre}, thanks for purchasing {producto}.",
-  "#sales"
+  "Bienvenida",
+  "Hola {nombre}, gracias por comprar {producto}.",
+  "#ventas"
 );
 ```
 
-## JavaScript String Methods Used
+## Métodos de String de JavaScript utilizados
 
 ### `trim()`
 
-Removes leading and trailing whitespace from user input.
+Elimina los espacios en blanco al inicio y al final de la entrada del usuario.
 
-Example:
+Ejemplo:
 
 ```javascript
 titulo.value.trim();
 ```
 
-Used to:
+Se utiliza para:
 
-* Clean the title.
-* Clean the message.
-* Clean the hashtag.
-* Clean the values entered for template variables.
+- Limpiar el título.
+- Limpiar el mensaje.
+- Limpiar el hashtag.
+- Limpiar los valores ingresados para las variables de la plantilla.
 
 ---
 
 ### `toLowerCase()`
 
-Converts the hashtag to lowercase.
+Convierte el hashtag a minúsculas.
 
-Example:
+Ejemplo:
 
 ```javascript
 texto.toLowerCase();
 ```
 
-Used to ensure hashtags always have a consistent format.
+Se utiliza para garantizar que los hashtags siempre tengan un formato consistente.
 
 ---
 
 ### `startsWith()`
 
-Checks whether the hashtag already starts with `#`.
+Verifica si el hashtag ya comienza con `#`.
 
-Example:
+Ejemplo:
 
 ```javascript
 texto.startsWith("#");
 ```
 
-Used to avoid adding multiple `#` symbols.
+Se utiliza para evitar agregar múltiples símbolos `#`.
 
 ---
 
 ### `length`
 
-Returns the number of characters in a string.
+Devuelve la cantidad de caracteres de una cadena de texto.
 
-Example:
+Ejemplo:
 
 ```javascript
 mensaje.length;
 ```
 
-Used to display the character count for each template.
+Se utiliza para mostrar el número de caracteres de cada plantilla.
 
 ---
 
 ### `slice()`
 
-Extracts part of a string.
+Extrae una parte de una cadena de texto.
 
-Example:
+Ejemplo:
 
 ```javascript
 mensaje.slice(0, 60);
 ```
 
-Used to truncate long messages so template cards remain compact.
+Se utiliza para truncar mensajes largos y mantener las tarjetas de las plantillas compactas.
 
 ---
 
 ### `replaceAll()`
 
-Replaces every occurrence of a substring.
+Reemplaza todas las apariciones de una subcadena.
 
-Example:
+Ejemplo:
 
 ```javascript
 mensaje
@@ -120,10 +120,11 @@ mensaje
   .replaceAll("{producto}", producto);
 ```
 
-Used to generate personalized messages by replacing template variables with user-provided values.
+Se utiliza para generar mensajes personalizados reemplazando las variables de la plantilla con los valores proporcionados por el usuario.
 
-## Technologies
+## Tecnologías
 
-* HTML5
-* Tailwind CSS
-* JavaScript (ES6)
+- HTML
+- Tailwind CSS
+- JavaScript (ES6)
+```
