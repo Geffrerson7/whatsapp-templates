@@ -1,10 +1,30 @@
 const state = { plantillas: [] };
 const form = document.getElementById("form-plantilla");
 const lista = document.getElementById("listaPlantillas");
+const selector = document.getElementById("selector");
+const salida = document.getElementById("mensaje-final");
+
+function normalizarHashtag(texto) {
+  const limpio = texto.trim().toLowerCase();
+  return limpio.startsWith("#") ? limpio : "#" + limpio;
+}
+
+function generarMensajeFinal(plantilla, valorNombre) {
+  return plantilla.mensaje.replaceAll("{nombre}", valorNombre);
+}
 
 function agregarPlantilla(titulo, mensaje, hashtag) {
   const nueva = new Template(titulo, mensaje, hashtag);
   state.plantillas.push(nueva);
+}
+
+function renderSelector() {
+  selector.innerHTML = state.plantillas
+    .map(
+      (plantilla, indice) =>
+        `<option value="${indice}">${plantilla.titulo}</option>`,
+    ) // value = posición en el array
+    .join("");
 }
 
 function render() {
@@ -22,6 +42,8 @@ function render() {
       <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>`;
     lista.appendChild(li);
   });
+
+  renderSelector();
 }
 
 form.addEventListener("submit", function (evento) {
@@ -38,7 +60,12 @@ form.addEventListener("submit", function (evento) {
   form.reset();
 });
 
-function normalizarHashtag(texto) {
-  const limpio = texto.trim().toLowerCase();
-  return limpio.startsWith("#") ? limpio : "#" + limpio;
-}
+document.getElementById("btn-generar").addEventListener("click", function () {
+  const plantilla = state.plantillas[Number(selector.value)];
+  const nombre = document.getElementById("valorNombre").value.trim();
+  salida.textContent = generarMensajeFinal(plantilla, nombre);
+});
+
+document.getElementById("btn-copiar").addEventListener("click", function () {
+  navigator.clipboard.writeText(salida.textContent);
+});
