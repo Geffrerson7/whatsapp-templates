@@ -32,6 +32,7 @@ function render() {
   state.plantillas.forEach(function (plantilla) {
     const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE");
     const li = document.createElement("li");
+    const cantidadCaracteres = plantilla.mensaje.length;
     li.className = "bg-white p-4 rounded-lg shadow";
     li.innerHTML = `
       <div class="flex items-start justify-between gap-2">
@@ -39,6 +40,9 @@ function render() {
         <span class="text-xs text-slate-400 shrink-0">${fechaTexto}</span>
       </div>
       <p class="text-sm text-slate-600 mt-1">${plantilla.mensaje}</p>
+      <p class="text-xs text-slate-400 mt-1">
+        ${cantidadCaracteres} caracteres
+      </p>
       <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>`;
     lista.appendChild(li);
   });
