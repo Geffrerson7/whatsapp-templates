@@ -9,8 +9,10 @@ function normalizarHashtag(texto) {
   return limpio.startsWith("#") ? limpio : "#" + limpio;
 }
 
-function generarMensajeFinal(plantilla, valorNombre) {
-  return plantilla.mensaje.replaceAll("{nombre}", valorNombre);
+function generarMensajeFinal(plantilla, nombre, producto) {
+  return plantilla.mensaje
+    .replaceAll("{nombre}", nombre)
+    .replaceAll("{producto}", producto);
 }
 
 function agregarPlantilla(titulo, mensaje, hashtag) {
@@ -70,8 +72,11 @@ form.addEventListener("submit", function (evento) {
 
 document.getElementById("btn-generar").addEventListener("click", function () {
   const plantilla = state.plantillas[Number(selector.value)];
+
   const nombre = document.getElementById("valorNombre").value.trim();
-  salida.textContent = generarMensajeFinal(plantilla, nombre);
+  const producto = document.getElementById("valorProducto").value.trim();
+
+  salida.textContent = generarMensajeFinal(plantilla, nombre, producto);
 });
 
 document.getElementById("btn-copiar").addEventListener("click", function () {
