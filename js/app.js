@@ -20,6 +20,13 @@ function agregarPlantilla(titulo, mensaje, hashtag) {
   state.plantillas.push(nueva);
 }
 
+function eliminarPlantilla(id) {
+  state.plantillas = state.plantillas.filter(
+    (plantilla) => plantilla.id !== id,
+  ); // sin mutar: filtra
+  render();
+}
+
 function renderSelector() {
   selector.innerHTML = state.plantillas
     .map(
@@ -49,7 +56,9 @@ function render() {
       <p class="text-xs text-slate-400 mt-1">
         ${cantidadCaracteres} caracteres
       </p>
-      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>`;
+      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
+      <button class="btn-eliminar bg-red-600 text-xs text-[#ffffff] border border-red rounded px-2 py-1" data-id="${plantilla.id}">Eliminar</button>
+      `;
     lista.appendChild(li);
   });
 
@@ -81,4 +90,11 @@ document.getElementById("btn-generar").addEventListener("click", function () {
 
 document.getElementById("btn-copiar").addEventListener("click", function () {
   navigator.clipboard.writeText(salida.textContent);
+});
+
+lista.addEventListener("click", function (evento) {
+  if (evento.target.classList.contains("btn-eliminar")) {
+    const id = evento.target.dataset.id;
+    eliminarPlantilla(id);
+  }
 });
