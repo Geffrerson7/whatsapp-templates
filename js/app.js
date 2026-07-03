@@ -8,9 +8,9 @@ function agregarPlantilla(titulo, mensaje, hashtag) {
 }
 
 function render() {
-  lista.innerHTML = ""; // 1. limpia lo anterior
+  lista.innerHTML = "";
   state.plantillas.forEach(function (plantilla) {
-    const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE"); // Date → texto legible
+    const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE");
     const li = document.createElement("li");
     li.className = "bg-white p-4 rounded-lg shadow";
     li.innerHTML = `
@@ -20,13 +20,25 @@ function render() {
       </div>
       <p class="text-sm text-slate-600 mt-1">${plantilla.mensaje}</p>
       <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>`;
-    lista.appendChild(li); // 2. agrega un nodo por dato
+    lista.appendChild(li);
   });
 }
 
 form.addEventListener("submit", function (evento) {
   evento.preventDefault();
-  agregarPlantilla(titulo.value, mensaje.value, hashtag.value);
-  render(); // ← el estado cambió, redibujamos
+  const tituloTexto = titulo.value.trim();
+  const mensajeTexto = mensaje.value.trim();
+
+  if (tituloTexto.length === 0 || mensajeTexto.length === 0) {
+    alert("Título y mensaje son obligatorios");
+    return;
+  }
+  agregarPlantilla(tituloTexto, mensajeTexto, normalizarHashtag(hashtag.value));
+  render();
   form.reset();
 });
+
+function normalizarHashtag(texto) {
+  const limpio = texto.trim().toLowerCase();
+  return limpio.startsWith("#") ? limpio : "#" + limpio;
+}
