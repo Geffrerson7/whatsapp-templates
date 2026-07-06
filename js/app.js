@@ -23,8 +23,16 @@ function agregarPlantilla(titulo, mensaje, hashtag) {
 function eliminarPlantilla(id) {
   state.plantillas = state.plantillas.filter(
     (plantilla) => plantilla.id !== id,
-  ); // sin mutar: filtra
+  );
   render();
+}
+
+function cargarEnFormulario(id) {
+  const plantilla = state.plantillas.find((plantilla) => plantilla.id === id);
+  titulo.value = plantilla.titulo;
+  mensaje.value = plantilla.mensaje;
+  hashtag.value = plantilla.hashtag;
+  state.editandoId = id; // recordamos que estamos editando, no creando
 }
 
 function renderSelector() {
@@ -57,7 +65,8 @@ function render() {
         ${cantidadCaracteres} caracteres
       </p>
       <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
-      <button class="btn-eliminar bg-red-600 text-xs text-[#ffffff] border border-red rounded px-2 py-1" data-id="${plantilla.id}">Eliminar</button>
+      <button class="btn-editar text-xs px-2.5 py-1 rounded-md bg-blue-500 text-[#ffffff] hover:bg-blue-700 transition" data-id="${plantilla.id}">Editar</button>
+      <button class="btn-eliminar bg-red-500 hover:bg-red-700 text-xs text-[#ffffff] border border-red rounded px-2 py-1" data-id="${plantilla.id}">Eliminar</button>
       `;
     lista.appendChild(li);
   });
@@ -74,7 +83,27 @@ form.addEventListener("submit", function (evento) {
     alert("Título y mensaje son obligatorios");
     return;
   }
-  agregarPlantilla(tituloTexto, mensajeTexto, normalizarHashtag(hashtag.value));
+
+  if (state.editandoId) {
+    state.plantillas = state.plantillas.map((plantilla) =>
+      plantilla.id === state.editandoId
+        ? {
+            ...plantilla,
+            titulo: tituloTexto,
+            mensaje: mensajeTexto,
+            hashtag: normalizarHashtag(hashtag.value),
+          }
+        : plantilla,
+    );
+    state.editandoId = null;
+  } else {
+    agregarPlantilla(
+      tituloTexto,
+      mensajeTexto,
+      normalizarHashtag(hashtag.value),
+    );
+  }
+
   render();
   form.reset();
 });
@@ -93,8 +122,7 @@ document.getElementById("btn-copiar").addEventListener("click", function () {
 });
 
 lista.addEventListener("click", function (evento) {
-  if (evento.target.classList.contains("btn-eliminar")) {
-    const id = evento.target.dataset.id;
-    eliminarPlantilla(id);
-  }
+  const id = evento.target.dataset.id;
+  if (evento.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
+  if (evento.target.classList.contains("btn-editar")) cargarEnFormulario(id);
 });
