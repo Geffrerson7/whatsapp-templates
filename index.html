@@ -34,11 +34,18 @@
           <textarea
             id="mensaje"
             rows="3"
-            placeholder="Mensaje (usa {nombre})"
+            placeholder="Mensaje (usa {nombre} y {producto})"
             class="p-2 border border-slate-300 rounded"
           ></textarea>
           <button class="bg-emerald-600 text-white py-2 rounded">
             Agregar plantilla
+          </button>
+          <button
+            type="button"
+            id="btn-cancelar"
+            class="px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 hidden"
+          >
+            Cancelar
           </button>
         </form>
         <section
