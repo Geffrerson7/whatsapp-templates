@@ -35,6 +35,35 @@ function cargarEnFormulario(id) {
   state.editandoId = id; // recordamos que estamos editando, no creando
 }
 
+function contarPorHashtag(plantillas) {
+  const conteo = {};
+  plantillas.forEach(function (plantilla) {
+    const elHashtag = plantilla.hashtag;
+    if (conteo[elHashtag]) {
+      conteo[elHashtag] = conteo[elHashtag] + 1;
+    } else {
+      conteo[elHashtag] = 1;
+    }
+  });
+  return conteo;
+}
+
+function renderStats() {
+  const total = state.plantillas.length;
+  const porTag = contarPorHashtag(state.plantillas);
+  const etiquetas = Object.entries(porTag)
+    .map(
+      ([hashtag, cantidad]) =>
+        `<span class="text-xs bg-white border border-slate-200 px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`,
+    )
+    .join("");
+  document.getElementById("panel-stats").innerHTML = `
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-sm font-semibold text-slate-700">${total} plantilla(s)</span>
+      ${etiquetas}
+    </div>`;
+}
+
 function renderSelector() {
   selector.innerHTML = state.plantillas
     .map(
