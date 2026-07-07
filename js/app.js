@@ -48,6 +48,14 @@ function contarPorHashtag(plantillas) {
   return conteo;
 }
 
+function plantillasVisibles() {
+  const filtroTexto = (state.filtro ?? "").toLowerCase();
+  if (filtroTexto === "") return state.plantillas;
+  return state.plantillas.filter((plantilla) =>
+    plantilla.hashtag.toLowerCase().includes(filtroTexto),
+  );
+}
+
 function renderStats() {
   const total = state.plantillas.length;
   const porTag = contarPorHashtag(state.plantillas);
@@ -75,7 +83,7 @@ function renderSelector() {
 
 function render() {
   lista.innerHTML = "";
-  state.plantillas.forEach(function (plantilla) {
+  plantillasVisibles().forEach(function (plantilla) {
     const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE");
     const li = document.createElement("li");
     const cantidadCaracteres = plantilla.mensaje.length;
@@ -156,3 +164,10 @@ lista.addEventListener("click", function (evento) {
   if (evento.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
   if (evento.target.classList.contains("btn-editar")) cargarEnFormulario(id);
 });
+
+document
+  .getElementById("buscador")
+  .addEventListener("input", function (evento) {
+    state.filtro = evento.target.value;
+    render();
+  });
