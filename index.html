@@ -100,11 +100,10 @@
         </section>
       </div>
 
-      <!-- Columna derecha: grid de tarjetas (el JS las pinta; empieza vacío) -->
-      <ul
-        id="listaPlantillas"
-        class="grid gap-3 sm:grid-cols-2 content-start"
-      ></ul>
+      <div class="grid gap-4 content-start">
+        <aside id="panel-stats" class="bg-slate-100 rounded-lg p-3"></aside>
+        <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2"></ul>
+      </div>
     </div>
 
     <script src="js/models/Template.js"></script>
