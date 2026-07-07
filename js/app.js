@@ -3,6 +3,7 @@ const form = document.getElementById("form-plantilla");
 const lista = document.getElementById("listaPlantillas");
 const selector = document.getElementById("selector");
 const salida = document.getElementById("mensaje-final");
+const botonCancelarEdicion = document.getElementById("btn-cancelar");
 
 function normalizarHashtag(texto) {
   const limpio = texto.trim().toLowerCase();
@@ -32,7 +33,9 @@ function cargarEnFormulario(id) {
   titulo.value = plantilla.titulo;
   mensaje.value = plantilla.mensaje;
   hashtag.value = plantilla.hashtag;
-  state.editandoId = id; // recordamos que estamos editando, no creando
+  state.editandoId = id;
+
+  botonCancelarEdicion.classList.remove("hidden");
 }
 
 function contarPorHashtag(plantillas) {
@@ -54,6 +57,13 @@ function plantillasVisibles() {
   return state.plantillas.filter((plantilla) =>
     plantilla.hashtag.toLowerCase().includes(filtroTexto),
   );
+}
+
+function cancelarEdicion() {
+  state.editandoId = null;
+  form.reset();
+
+  botonCancelarEdicion.classList.add("hidden");
 }
 
 function renderStats() {
@@ -134,6 +144,8 @@ form.addEventListener("submit", function (evento) {
         : plantilla,
     );
     state.editandoId = null;
+
+    botonCancelarEdicion.classList.add("hidden");
   } else {
     agregarPlantilla(
       tituloTexto,
@@ -158,6 +170,8 @@ document.getElementById("btn-generar").addEventListener("click", function () {
 document.getElementById("btn-copiar").addEventListener("click", function () {
   navigator.clipboard.writeText(salida.textContent);
 });
+
+botonCancelarEdicion.addEventListener("click", cancelarEdicion);
 
 lista.addEventListener("click", function (evento) {
   const id = evento.target.dataset.id;
