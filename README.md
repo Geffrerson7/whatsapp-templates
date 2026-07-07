@@ -187,4 +187,3 @@ Se utiliza para:
 - HTML
 - Tailwind CSS
 - JavaScript (ES6)
-```
