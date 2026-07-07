@@ -101,6 +101,7 @@ function render() {
   });
 
   renderSelector();
+  renderStats();
 }
 
 form.addEventListener("submit", function (evento) {
