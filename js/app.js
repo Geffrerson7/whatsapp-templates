@@ -66,9 +66,34 @@ function cancelarEdicion() {
   botonCancelarEdicion.classList.add("hidden");
 }
 
+function hashtagMasUsado(plantillas) {
+  if (plantillas.length === 0) {
+    return null;
+  }
+
+  const conteo = contarPorHashtag(plantillas);
+
+  let resultado = {
+    hashtag: "",
+    cantidad: 0,
+  };
+
+  for (const [tag, total] of Object.entries(conteo)) {
+    if (total > resultado.cantidad) {
+      resultado = {
+        hashtag: tag,
+        cantidad: total,
+      };
+    }
+  }
+
+  return resultado;
+}
+
 function renderStats() {
   const total = state.plantillas.length;
   const porTag = contarPorHashtag(state.plantillas);
+  const masUsado = hashtagMasUsado(state.plantillas);
   const etiquetas = Object.entries(porTag)
     .map(
       ([hashtag, cantidad]) =>
@@ -76,10 +101,29 @@ function renderStats() {
     )
     .join("");
   document.getElementById("panel-stats").innerHTML = `
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="text-sm font-semibold text-slate-700">${total} plantilla(s)</span>
-      ${etiquetas}
-    </div>`;
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-sm font-semibold text-slate-700">
+          ${total} plantilla(s)
+        </span>
+
+        ${etiquetas}
+      </div>
+
+      ${
+        masUsado
+          ? `<p class="text-sm text-slate-600">
+         Hashtag más usado:
+         <strong>${masUsado.hashtag}</strong>
+         (${masUsado.cantidad})
+       </p>`
+          : `<p class="text-sm text-slate-500">
+         Aún no hay plantillas.
+       </p>`
+      }
+      
+    </div>
+  `;
 }
 
 function renderSelector() {
@@ -87,7 +131,7 @@ function renderSelector() {
     .map(
       (plantilla, indice) =>
         `<option value="${indice}">${plantilla.titulo}</option>`,
-    ) // value = posición en el array
+    )
     .join("");
 }
 
