@@ -122,6 +122,66 @@ mensaje
 
 Se utiliza para generar mensajes personalizados reemplazando las variables de la plantilla con los valores proporcionados por el usuario.
 
+## Delegación de eventos
+
+La aplicación utiliza **delegación de eventos** para gestionar las acciones de **editar** y **eliminar** plantillas sin asignar un evento a cada botón individualmente.
+
+En lugar de registrar un `addEventListener()` para cada botón creado dinámicamente, se registra un único listener sobre el elemento `<ul>` que contiene todas las plantillas.
+
+Ejemplo:
+
+```javascript
+lista.addEventListener("click", function (evento) {
+  const id = evento.target.dataset.id;
+
+  if (evento.target.classList.contains("btn-eliminar")) {
+    eliminarPlantilla(id);
+  }
+
+  if (evento.target.classList.contains("btn-editar")) {
+    cargarEnFormulario(id);
+  }
+});
+```
+
+Cuando el usuario hace clic sobre un botón, el evento se propaga hasta la lista (`lista`). A partir del elemento que originó el clic (`evento.target`), la aplicación identifica qué acción ejecutar.
+
+Este enfoque permite:
+
+* Reducir la cantidad de listeners registrados.
+* Hacer que los botones de plantillas agregadas dinámicamente funcionen automáticamente.
+* Mantener el código más simple y fácil de mantener.
+
+## Función `contarPorHashtag()`
+
+La función `contarPorHashtag()` es una **función pura** que recibe un arreglo de plantillas y devuelve un objeto con la cantidad de plantillas asociadas a cada hashtag.
+
+Ejemplo:
+
+```javascript
+contarPorHashtag([
+  { hashtag: "#ventas" },
+  { hashtag: "#ventas" },
+  { hashtag: "#soporte" }
+]);
+```
+
+Resultado:
+
+```javascript
+{
+  "#ventas": 2,
+  "#soporte": 1
+}
+```
+
+Esta función no modifica el estado de la aplicación ni produce efectos secundarios. Su único propósito es calcular estadísticas a partir de los datos recibidos.
+
+Se utiliza para:
+
+* Mostrar el número total de plantillas por hashtag en el panel de estadísticas.
+* Calcular cuál es el hashtag más utilizado mediante la función `hashtagMasUsado()`.
+
 ## Tecnologías
 
 - HTML
