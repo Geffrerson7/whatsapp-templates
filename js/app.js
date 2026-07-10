@@ -164,6 +164,7 @@ function render() {
 
   renderSelector();
   renderStats();
+  guardar();
 }
 
 form.addEventListener("submit", function (evento) {
