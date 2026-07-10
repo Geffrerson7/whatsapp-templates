@@ -160,6 +160,9 @@ function render() {
   lista.innerHTML = "";
   plantillasVisibles().forEach(function (plantilla) {
     const fechaTexto = new Date(plantilla.fecha).toLocaleDateString("es-PE");
+    const fechaEdicionTexto = plantilla.editadaEl
+      ? `Editada: ${new Date(plantilla.editadaEl).toLocaleDateString("es-PE")}`
+      : "Sin editar";
     const li = document.createElement("li");
     const cantidadCaracteres = plantilla.mensaje.length;
     const mensajeCorto =
@@ -170,7 +173,16 @@ function render() {
     li.innerHTML = `
       <div class="flex items-start justify-between gap-2">
         <strong class="text-slate-800">${plantilla.titulo}</strong>
-        <span class="text-xs text-slate-400 shrink-0">${fechaTexto}</span>
+
+        <div class="text-right">
+          <p class="text-xs text-slate-400">
+            Creada: ${fechaTexto}
+          </p>
+
+          <p class="text-xs text-slate-400">
+            ${fechaEdicionTexto}
+          </p>
+        </div>
       </div>
       <p class="text-sm text-slate-600 mt-1">${mensajeCorto}</p>
       <p class="text-xs text-slate-400 mt-1">
@@ -210,6 +222,7 @@ form.addEventListener("submit", function (evento) {
             titulo: tituloTexto,
             mensaje: mensajeTexto,
             hashtag: normalizarHashtag(hashtag.value),
+            editadaEl: new Date(),
           }
         : plantilla,
     );
