@@ -1,7 +1,12 @@
 const CLAVE = "whatsapp-templates";
 
 function guardar() {
-  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+  state.plantillas.length === 0
+    ? localStorage.removeItem(CLAVE)
+    : localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+
+  document.getElementById("estado").textContent =
+    state.plantillas.length > 0 ? "Guardado ✓" : "Vacío";
 }
 
 function cargar() {
