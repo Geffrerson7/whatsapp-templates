@@ -1,9 +1,22 @@
+// ===============================
+// Estado de la aplicación
+// ===============================
+
 const state = { plantillas: [] };
+
+// ===============================
+// Referencias al DOM
+// ===============================
+
 const form = document.getElementById("form-plantilla");
 const lista = document.getElementById("listaPlantillas");
 const selector = document.getElementById("selector");
 const salida = document.getElementById("mensaje-final");
 const botonCancelarEdicion = document.getElementById("btn-cancelar");
+
+// ===============================
+// Funciones utilitarias
+// ===============================
 
 function normalizarHashtag(texto) {
   const limpio = texto.trim().toLowerCase();
@@ -14,28 +27,6 @@ function generarMensajeFinal(plantilla, nombre, producto) {
   return plantilla.mensaje
     .replaceAll("{nombre}", nombre)
     .replaceAll("{producto}", producto);
-}
-
-function agregarPlantilla(titulo, mensaje, hashtag) {
-  const nueva = new Template(titulo, mensaje, hashtag);
-  state.plantillas.push(nueva);
-}
-
-function eliminarPlantilla(id) {
-  state.plantillas = state.plantillas.filter(
-    (plantilla) => plantilla.id !== id,
-  );
-  render();
-}
-
-function cargarEnFormulario(id) {
-  const plantilla = state.plantillas.find((plantilla) => plantilla.id === id);
-  titulo.value = plantilla.titulo;
-  mensaje.value = plantilla.mensaje;
-  hashtag.value = plantilla.hashtag;
-  state.editandoId = id;
-
-  botonCancelarEdicion.classList.remove("hidden");
 }
 
 function contarPorHashtag(plantillas) {
@@ -49,21 +40,6 @@ function contarPorHashtag(plantillas) {
     }
   });
   return conteo;
-}
-
-function plantillasVisibles() {
-  const filtroTexto = (state.filtro ?? "").toLowerCase();
-  if (filtroTexto === "") return state.plantillas;
-  return state.plantillas.filter((plantilla) =>
-    plantilla.hashtag.toLowerCase().includes(filtroTexto),
-  );
-}
-
-function cancelarEdicion() {
-  state.editandoId = null;
-  form.reset();
-
-  botonCancelarEdicion.classList.add("hidden");
 }
 
 function hashtagMasUsado(plantillas) {
@@ -89,6 +65,51 @@ function hashtagMasUsado(plantillas) {
 
   return resultado;
 }
+
+function plantillasVisibles() {
+  const filtroTexto = (state.filtro ?? "").toLowerCase();
+  if (filtroTexto === "") return state.plantillas;
+  return state.plantillas.filter((plantilla) =>
+    plantilla.hashtag.toLowerCase().includes(filtroTexto),
+  );
+}
+
+// ===============================
+// Funciones CRUD
+// ===============================
+
+function agregarPlantilla(titulo, mensaje, hashtag) {
+  const nueva = new Template(titulo, mensaje, hashtag);
+  state.plantillas.push(nueva);
+}
+
+function eliminarPlantilla(id) {
+  state.plantillas = state.plantillas.filter(
+    (plantilla) => plantilla.id !== id,
+  );
+  render();
+}
+
+function cargarEnFormulario(id) {
+  const plantilla = state.plantillas.find((plantilla) => plantilla.id === id);
+  titulo.value = plantilla.titulo;
+  mensaje.value = plantilla.mensaje;
+  hashtag.value = plantilla.hashtag;
+  state.editandoId = id;
+
+  botonCancelarEdicion.classList.remove("hidden");
+}
+
+function cancelarEdicion() {
+  state.editandoId = null;
+  form.reset();
+
+  botonCancelarEdicion.classList.add("hidden");
+}
+
+// ===============================
+// Renderizado
+// ===============================
 
 function renderStats() {
   const total = state.plantillas.length;
@@ -138,7 +159,7 @@ function renderSelector() {
 function render() {
   lista.innerHTML = "";
   plantillasVisibles().forEach(function (plantilla) {
-    const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE");
+    const fechaTexto = new Date(plantilla.fecha).toLocaleDateString("es-PE");
     const li = document.createElement("li");
     const cantidadCaracteres = plantilla.mensaje.length;
     const mensajeCorto =
@@ -166,6 +187,10 @@ function render() {
   renderStats();
   guardar();
 }
+
+// ===============================
+// Eventos
+// ===============================
 
 form.addEventListener("submit", function (evento) {
   evento.preventDefault();
@@ -230,3 +255,10 @@ document
     state.filtro = evento.target.value;
     render();
   });
+
+// ===============================
+// Inicialización
+// ===============================
+
+state.plantillas = cargar();
+render();
