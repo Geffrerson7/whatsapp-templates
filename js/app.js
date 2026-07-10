@@ -266,4 +266,6 @@ document
 // ===============================
 
 state.plantillas = cargar();
+state.filtro = localStorage.getItem(CLAVE_FILTRO) ?? "";
+document.getElementById("buscador").value = state.filtro;
 render();
