@@ -241,6 +241,11 @@ document.getElementById("btn-copiar").addEventListener("click", function () {
   navigator.clipboard.writeText(salida.textContent);
 });
 
+document.getElementById("btn-vaciar").addEventListener("click", function () {
+  state.plantillas = [];
+  render();
+});
+
 botonCancelarEdicion.addEventListener("click", cancelarEdicion);
 
 lista.addEventListener("click", function (evento) {
