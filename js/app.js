@@ -3,6 +3,7 @@
 // ===============================
 
 const state = { plantillas: [] };
+let accionPendiente = null;
 
 // ===============================
 // Referencias al DOM
@@ -13,6 +14,8 @@ const lista = document.getElementById("listaPlantillas");
 const selector = document.getElementById("selector");
 const salida = document.getElementById("mensaje-final");
 const botonCancelarEdicion = document.getElementById("btn-cancelar");
+const modal = document.getElementById("modal");
+const btnVaciar = document.getElementById("btn-vaciar");
 
 // ===============================
 // Funciones utilitarias
@@ -74,6 +77,12 @@ function plantillasVisibles() {
   );
 }
 
+function pedirConfirmacion(mensaje, accion) {
+  document.getElementById("modal-texto").textContent = mensaje;
+  accionPendiente = accion;
+  modal.classList.remove("hidden");
+}
+
 // ===============================
 // Funciones CRUD
 // ===============================
@@ -105,6 +114,15 @@ function cancelarEdicion() {
   form.reset();
 
   botonCancelarEdicion.classList.add("hidden");
+}
+
+function eliminarPlantilla(id) {
+  pedirConfirmacion("¿Eliminar esta plantilla?", function () {
+    state.plantillas = state.plantillas.filter(
+      (plantilla) => plantilla.id !== id,
+    );
+    render();
+  });
 }
 
 // ===============================
@@ -254,9 +272,14 @@ document.getElementById("btn-copiar").addEventListener("click", function () {
   navigator.clipboard.writeText(salida.textContent);
 });
 
-document.getElementById("btn-vaciar").addEventListener("click", function () {
-  state.plantillas = [];
-  render();
+btnVaciar.addEventListener("click", function () {
+  pedirConfirmacion(
+    "Esto borrará TODAS tus plantillas. ¿Continuar?",
+    function () {
+      state.plantillas = [];
+      render();
+    },
+  );
 });
 
 botonCancelarEdicion.addEventListener("click", cancelarEdicion);
@@ -272,6 +295,36 @@ document
   .addEventListener("input", function (evento) {
     state.filtro = evento.target.value;
     render();
+  });
+
+document
+  .getElementById("modal-cancelar")
+  .addEventListener("click", function () {
+    modal.classList.add("hidden");
+    accionPendiente = null;
+  });
+
+document
+  .getElementById("modal-confirmar")
+  .addEventListener("click", function () {
+    if (accionPendiente) accionPendiente();
+    modal.classList.add("hidden");
+    accionPendiente = null;
+  });
+
+document
+  .getElementById("modal-cancelar")
+  .addEventListener("click", function () {
+    modal.classList.add("hidden");
+    accionPendiente = null;
+  });
+
+document
+  .getElementById("modal-confirmar")
+  .addEventListener("click", function () {
+    if (accionPendiente) accionPendiente();
+    modal.classList.add("hidden");
+    accionPendiente = null;
   });
 
 // ===============================
