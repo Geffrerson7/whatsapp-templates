@@ -182,6 +182,22 @@ Se utiliza para:
 * Mostrar el número total de plantillas por hashtag en el panel de estadísticas.
 * Calcular cuál es el hashtag más utilizado mediante la función `hashtagMasUsado()`.
 
+## Persistencia del estado
+
+La aplicación guarda automáticamente el estado utilizando **Local Storage**, lo que permite conservar las plantillas y el filtro de búsqueda incluso después de recargar la página.
+
+La función `guardar()` se ejecuta cada vez que se renderiza la interfaz. Si existen plantillas, las convierte a formato JSON mediante `JSON.stringify()` y las almacena en `localStorage`. Si la colección está vacía, elimina la clave utilizando `removeItem()` para mantener el almacenamiento limpio.
+
+Al iniciar la aplicación, la función `cargar()` recupera la información almacenada mediante `localStorage.getItem()`. Si existen datos, los reconstruye con `JSON.parse()`; de lo contrario, devuelve un arreglo vacío para que la aplicación comience sin errores.
+
+### ¿Por qué se utiliza `try/catch`?
+
+La función `JSON.parse()` lanza una excepción cuando el contenido almacenado no es un JSON válido. Esto puede ocurrir si los datos fueron modificados manualmente o quedaron corruptos.
+
+Para evitar que la aplicación falle al iniciarse, `JSON.parse()` se ejecuta dentro de un bloque `try/catch`. Si ocurre un error, se muestra una advertencia en la consola con `console.warn()` y la función devuelve un arreglo vacío, permitiendo que la aplicación continúe funcionando normalmente.
+
+Este enfoque hace que la aplicación sea más robusta y tolerante a datos inválidos almacenados en el navegador.
+
 ## Tecnologías
 
 - HTML
