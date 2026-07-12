@@ -1,7 +1,9 @@
-const CLAVE = "whatsapp-templates";
-const CLAVE_FILTRO = "whatsapp-templates-filtro";
+import { state } from "./state.js";
 
-function guardar() {
+export const CLAVE = "whatsapp-templates";
+export const CLAVE_FILTRO = "whatsapp-templates-filtro";
+
+export function guardar() {
   state.plantillas.length === 0
     ? localStorage.removeItem(CLAVE)
     : localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
@@ -11,7 +13,7 @@ function guardar() {
     state.plantillas.length > 0 ? "Guardado ✓" : "Vacío";
 }
 
-function cargar() {
+export function cargar() {
   const guardado = localStorage.getItem(CLAVE);
   if (!guardado) return [];
   try {
