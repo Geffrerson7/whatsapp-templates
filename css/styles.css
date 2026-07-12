@@ -1,0 +1,60 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+.font-display {
+  font-family: "Space Grotesk", sans-serif;
+}
+.font-mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* Burbuja de chat: esquina inferior izquierda cortada + cola */
+.burbuja {
+  position: relative;
+  border-radius: 12px 12px 12px 2px;
+}
+.burbuja::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #ffffff;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+/* Animación del check al copiar */
+@keyframes tick-pop {
+  0% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.tick-animado {
+  animation: tick-pop 0.35s ease;
+}
+
+/* Foco visible accesible, consistente con la paleta */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid #00a884;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tick-animado,
+  .icon-tabler-x {
+    animation: none !important;
+    transition: none !important;
+  }
+}
