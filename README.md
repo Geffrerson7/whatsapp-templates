@@ -24,6 +24,7 @@ La aplicación está organizada utilizando **ES Modules (ESM)**, separando las r
 - **`state.js`**: almacena el estado global de la aplicación y contiene funciones puras relacionadas con las plantillas, como el filtrado, ordenamiento y generación de estadísticas.
 - **`storage.js`**: administra la persistencia de datos mediante Local Storage, encargándose de guardar y recuperar las plantillas y el filtro.
 - **`ui.js`**: contiene el renderizado de la interfaz y los eventos que permiten interactuar con la aplicación.
+- **`modal.js`**: administra la lógica del modal de confirmación, incluyendo su apertura, cierre y la ejecución de acciones que requieren la confirmación del usuario.
 
 ## Persistencia de datos
 
