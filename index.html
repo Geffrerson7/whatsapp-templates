@@ -4,104 +4,137 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plantillas WhatsApp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#0F1210",
+              paper: "#F6F4EC",
+              thread: "#D9D5C7",
+              tick: "#00A884",
+              brick: "#C1442E",
+            },
+            fontFamily: {
+              display: ['"Space Grotesk"', "sans-serif"],
+              body: ['"IBM Plex Sans"', "sans-serif"],
+              mono: ['"IBM Plex Mono"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body class="bg-slate-100 min-h-screen p-6">
-    <h1 class="text-3xl font-bold text-center text-slate-800 mb-6">
+  <body class="bg-paper text-ink min-h-screen p-6">
+    <h1 class="font-display text-3xl font-semibold text-center text-ink mb-1">
       Mis Plantillas
     </h1>
+    <p class="text-center text-xs font-mono text-ink/50 mb-6 tracking-wide">
+      crea · guarda · envía
+    </p>
 
     <!-- Dos columnas: formulario a la izquierda, tarjetas a la derecha -->
     <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-[320px_1fr]">
-      <!-- Columna izquierda: acciones (formulario + el generador que agregarás en HU4) -->
+      <!-- Columna izquierda: acciones (formulario + el generador) -->
       <div class="grid gap-6 self-start">
         <form
           id="form-plantilla"
-          class="bg-white p-4 rounded-xl shadow grid gap-2"
+          class="bg-white p-4 rounded-2xl border border-thread shadow-sm grid gap-2"
         >
           <input
             id="titulo"
             type="text"
             placeholder="Título"
-            class="p-2 border border-slate-300 rounded"
+            class="p-2 border border-thread rounded-lg bg-paper/50 placeholder:text-ink/40"
           />
           <input
             id="hashtag"
             type="text"
             placeholder="hashtag"
-            class="p-2 border border-slate-300 rounded"
+            class="p-2 border border-thread rounded-lg bg-paper/50 font-mono text-sm placeholder:text-ink/40"
           />
           <textarea
             id="mensaje"
             rows="3"
             placeholder="Mensaje (usa {nombre} y {producto})"
-            class="p-2 border border-slate-300 rounded"
+            class="p-2 border border-thread rounded-lg bg-paper/50 placeholder:text-ink/40"
           ></textarea>
-          <button class="bg-emerald-600 text-white py-2 rounded">
+          <button
+            class="bg-tick text-white py-2 rounded-full font-medium hover:bg-tick/90 transition"
+          >
             Agregar plantilla
           </button>
           <button
             type="button"
             id="btn-cancelar"
-            class="px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 hidden"
+            class="px-4 py-2 border border-ink/20 text-ink rounded-full hover:bg-ink hover:text-paper transition hidden"
           >
             Cancelar
           </button>
         </form>
         <section
           id="generador"
-          class="bg-white p-4 rounded-xl shadow grid gap-3"
+          class="bg-white p-4 rounded-2xl border border-thread shadow-sm grid gap-3"
         >
-          <h2 class="font-bold text-slate-800">✨ Usar plantilla</h2>
+          <h2 class="font-display font-semibold text-ink">✨ Usar plantilla</h2>
 
-          <label class="grid gap-1 text-xs text-slate-500">
+          <label class="grid gap-1 text-xs font-mono text-ink/50">
             Plantilla
             <select
               id="selector"
-              class="p-2 border border-slate-300 rounded text-slate-800"
+              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
             ></select>
           </label>
 
-          <label class="grid gap-1 text-xs text-slate-500">
+          <label class="grid gap-1 text-xs font-mono text-ink/50">
             Nombre real
             <input
               id="valorNombre"
               type="text"
               placeholder="ej. Ana"
-              class="p-2 border border-slate-300 rounded text-slate-800"
+              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
             />
           </label>
 
-          <label class="grid gap-1 text-xs text-slate-500">
+          <label class="grid gap-1 text-xs font-mono text-ink/50">
             Producto
             <input
               id="valorProducto"
               type="text"
               placeholder="ej. Laptop Gamer"
-              class="p-2 border border-slate-300 rounded text-slate-800"
+              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
             />
           </label>
 
           <button
             id="btn-generar"
-            class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded transition"
+            class="bg-ink hover:bg-ink/85 text-paper font-medium py-2 rounded-full transition"
           >
             Generar
           </button>
 
-          <!-- Resultado: el mensaje final y el botón copiar -->
+          <!-- Resultado: burbuja de chat con el mensaje final -->
           <div
-            class="bg-slate-50 border border-slate-200 rounded p-3 grid gap-2"
+            class="burbuja bg-white border border-thread p-3 grid gap-2 ml-1"
           >
             <p
               id="mensaje-final"
-              class="text-sm text-slate-700 whitespace-pre-wrap min-h-[1.5rem]"
+              class="text-sm text-ink whitespace-pre-wrap min-h-[1.5rem]"
             ></p>
             <button
               id="btn-copiar"
-              class="justify-self-end text-xs text-emerald-700 hover:text-emerald-800"
+              class="justify-self-end text-xs font-mono text-tick hover:text-tick/80 flex items-center gap-1"
             >
-              📋 Copiar
+              <span id="btn-copiar-texto">Copiar</span>
+              <span id="btn-copiar-check">✓✓</span>
             </button>
           </div>
         </section>
@@ -113,13 +146,13 @@
             id="buscador"
             type="text"
             placeholder="Filtra por hashtag…"
-            class="flex-1 p-2 border border-slate-300 rounded-lg"
+            class="flex-1 p-2 border border-thread rounded-full bg-white placeholder:text-ink/40"
           />
 
           <button
             id="btn-limpiar-filtro"
             type="button"
-            class="group px-3 border border-slate-300 rounded-lg hover:bg-slate-100 transition-all duration-200"
+            class="group px-3 border border-thread rounded-full bg-white hover:bg-ink hover:text-paper hover:border-ink transition-all duration-200"
             title="Limpiar filtro"
           >
             <svg
@@ -142,26 +175,29 @@
         </div>
         <select
           id="orden"
-          class="w-full p-2 border border-slate-300 rounded-lg"
+          class="w-full p-2 border border-thread rounded-full bg-white text-sm"
         >
           <option value="recientes">Más recientes</option>
           <option value="antiguas">Más antiguas</option>
           <option value="alfabetico">Título (A-Z)</option>
         </select>
-        <aside id="panel-stats" class="bg-slate-100 rounded-lg p-3"></aside>
-        <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2"></ul>
+        <aside
+          id="panel-stats"
+          class="bg-white border border-thread rounded-2xl p-3"
+        ></aside>
+        <ul id="listaPlantillas" class="grid gap-4 sm:grid-cols-2"></ul>
         <div
-          class="flex items-center justify-between border-t border-slate-200 pt-3 mt-1"
+          class="flex items-center justify-between border-t border-thread pt-3 mt-1"
         >
           <p
             id="estado"
-            class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"
+            class="text-xs font-mono text-ink/60 bg-white border border-thread px-2.5 py-1 rounded-full"
           >
             Listo
           </p>
           <button
             id="btn-vaciar"
-            class="text-xs px-3 py-1.5 rounded-md border border-red-200 text-red-600 hover:bg-red-50 transition"
+            class="text-xs px-3 py-1.5 rounded-full border border-brick text-brick hover:bg-brick hover:text-white transition"
           >
             Vaciar todo
           </button>
@@ -171,22 +207,22 @@
 
     <div
       id="modal"
-      class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+      class="hidden fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4"
     >
       <div
-        class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center"
+        class="bg-paper p-6 rounded-2xl border border-thread shadow-xl max-w-sm w-full text-center"
       >
-        <p id="modal-texto" class="text-slate-700 mb-5">¿Seguro?</p>
+        <p id="modal-texto" class="text-ink mb-5">¿Seguro?</p>
         <div class="flex gap-2 justify-center">
           <button
             id="modal-cancelar"
-            class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+            class="px-4 py-2 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-paper transition"
           >
             Cancelar
           </button>
           <button
             id="modal-confirmar"
-            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+            class="px-4 py-2 rounded-full bg-brick text-white hover:bg-brick/85 transition"
           >
             Eliminar
           </button>

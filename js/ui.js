@@ -25,6 +25,9 @@ const salida = document.getElementById("mensaje-final");
 const botonCancelarEdicion = document.getElementById("btn-cancelar");
 const btnVaciar = document.getElementById("btn-vaciar");
 const btnLimpiarFiltro = document.getElementById("btn-limpiar-filtro");
+const btnCopiar = document.getElementById("btn-copiar");
+const btnCopiarTexto = document.getElementById("btn-copiar-texto");
+const btnCopiarCheck = document.getElementById("btn-copiar-check");
 
 // ===============================
 // Funciones CRUD
@@ -72,13 +75,13 @@ function renderStats() {
   const etiquetas = Object.entries(porTag)
     .map(
       ([hashtag, cantidad]) =>
-        `<span class="text-xs bg-white border border-slate-200 px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`,
+        `<span class="text-xs font-mono bg-paper border border-thread px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`,
     )
     .join("");
   document.getElementById("panel-stats").innerHTML = `
     <div class="flex flex-col gap-2">
       <div class="flex items-center gap-2 flex-wrap">
-        <span class="text-sm font-semibold text-slate-700">
+        <span class="font-display text-sm font-semibold text-ink">
           ${total} plantilla(s)
         </span>
 
@@ -87,12 +90,12 @@ function renderStats() {
 
       ${
         masUsado
-          ? `<p class="text-sm text-slate-600">
+          ? `<p class="text-sm text-ink/70">
               Hashtag más usado:
-              <strong>${masUsado.hashtag}</strong>
+              <strong class="font-mono text-ink">${masUsado.hashtag}</strong>
               (${masUsado.cantidad})
             </p>`
-          : `<p class="text-sm text-slate-500">
+          : `<p class="text-sm text-ink/50">
               Aún no hay plantillas.
             </p>`
       }
@@ -120,7 +123,7 @@ export function render() {
         ? "Aún no tienes plantillas. ¡Crea la primera!"
         : "No se encontraron plantillas con ese filtro.";
     lista.innerHTML = `
-      <li class="sm:col-span-2 text-center text-slate-400 py-10">
+      <li class="sm:col-span-2 text-center text-ink/40 py-10">
         <div class="text-4xl mb-2">📭</div>
         ${vacio}
       </li>`;
@@ -136,28 +139,31 @@ export function render() {
         plantilla.mensaje.length > 60
           ? plantilla.mensaje.slice(0, 60) + "…"
           : plantilla.mensaje;
-      li.className = "bg-white p-4 rounded-lg shadow";
+      li.className =
+        "burbuja bg-white border border-thread p-4 ml-1 hover:border-ink/30 transition-colors";
       li.innerHTML = `
       <div class="flex items-start justify-between gap-2">
-        <strong class="text-slate-800">${plantilla.titulo}</strong>
+        <strong class="font-display text-ink">${plantilla.titulo}</strong>
 
         <div class="text-right">
-          <p class="text-xs text-slate-400">
-            Creada: ${fechaTexto}
+          <p class="text-[11px] font-mono text-ink/40">
+            ${fechaTexto}
           </p>
 
-          <p class="text-xs text-slate-400">
+          <p class="text-[11px] font-mono text-ink/40">
             ${fechaEdicionTexto}
           </p>
         </div>
       </div>
-      <p class="text-sm text-slate-600 mt-1">${mensajeCorto}</p>
-      <p class="text-xs text-slate-400 mt-1">
+      <p class="text-sm text-ink/80 mt-1">${mensajeCorto}</p>
+      <p class="text-[11px] font-mono text-ink/40 mt-1">
         ${cantidadCaracteres} caracteres
       </p>
-      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
-      <button class="btn-editar text-xs px-2.5 py-1 rounded-md bg-blue-500 text-[#ffffff] hover:bg-blue-700 transition" data-id="${plantilla.id}">Editar</button>
-      <button class="btn-eliminar bg-red-500 hover:bg-red-700 text-xs text-[#ffffff] border border-red rounded px-2 py-1" data-id="${plantilla.id}">Eliminar</button>
+      <span class="inline-block text-xs font-mono bg-paper border border-thread text-ink/70 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
+      <div class="flex gap-2 mt-3">
+        <button class="btn-editar text-xs px-2.5 py-1 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-paper transition" data-id="${plantilla.id}">Editar</button>
+        <button class="btn-eliminar text-xs px-2.5 py-1 rounded-full border border-brick text-brick hover:bg-brick hover:text-white transition" data-id="${plantilla.id}">Eliminar</button>
+      </div>
       `;
       lista.appendChild(li);
     });
@@ -216,10 +222,31 @@ document.getElementById("btn-generar").addEventListener("click", function () {
   const producto = document.getElementById("valorProducto").value.trim();
 
   salida.textContent = generarMensajeFinal(plantilla, nombre, producto);
+
+  // Reinicia el estado del botón copiar cada vez que se genera un mensaje nuevo
+  btnCopiarTexto.textContent = "Copiar";
+  btnCopiar.classList.remove("text-tick");
+  btnCopiar.classList.add("text-tick");
+  btnCopiarCheck.classList.remove("tick-animado");
+  btnCopiarCheck.style.color = "";
 });
 
-document.getElementById("btn-copiar").addEventListener("click", function () {
+btnCopiar.addEventListener("click", function () {
+  if (!salida.textContent) return;
+
   navigator.clipboard.writeText(salida.textContent);
+
+  btnCopiarTexto.textContent = "Copiado";
+  btnCopiarCheck.style.color = "#00A884";
+  btnCopiarCheck.classList.remove("tick-animado");
+  // Forzar reflow para poder re-disparar la animación
+  void btnCopiarCheck.offsetWidth;
+  btnCopiarCheck.classList.add("tick-animado");
+
+  setTimeout(function () {
+    btnCopiarTexto.textContent = "Copiar";
+    btnCopiarCheck.style.color = "";
+  }, 2000);
 });
 
 btnVaciar.addEventListener("click", function () {
