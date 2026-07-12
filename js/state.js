@@ -52,17 +52,25 @@ export function hashtagMasUsado(plantillas) {
   return resultado;
 }
 
-function ordenar(plantillas) {
+export function ordenar(plantillas) {
   const copia = [...plantillas];
-  return state.orden === "antiguas"
-    ? copia.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
-    : copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+  if (state.orden === "antiguas") {
+    return copia.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  } else if (state.orden === "alfabetico") {
+    return copia.sort((a, b) => a.titulo.localeCompare(b.titulo, "es"));
+  } else {
+    return copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  }
 }
 
 export function plantillasVisibles() {
   const filtroTexto = (state.filtro ?? "").toLowerCase();
-  const filtradas = filtroTexto === ""
-    ? state.plantillas
-    : state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
+  const filtradas =
+    filtroTexto === ""
+      ? state.plantillas
+      : state.plantillas.filter((plantilla) =>
+          plantilla.hashtag.toLowerCase().includes(filtroTexto),
+        );
   return ordenar(filtradas);
 }
