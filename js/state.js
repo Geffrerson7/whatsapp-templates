@@ -52,10 +52,17 @@ export function hashtagMasUsado(plantillas) {
   return resultado;
 }
 
+function ordenar(plantillas) {
+  const copia = [...plantillas];
+  return state.orden === "antiguas"
+    ? copia.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+    : copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+}
+
 export function plantillasVisibles() {
   const filtroTexto = (state.filtro ?? "").toLowerCase();
-  if (filtroTexto === "") return state.plantillas;
-  return state.plantillas.filter((plantilla) =>
-    plantilla.hashtag.toLowerCase().includes(filtroTexto),
-  );
+  const filtradas = filtroTexto === ""
+    ? state.plantillas
+    : state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
+  return ordenar(filtradas);
 }

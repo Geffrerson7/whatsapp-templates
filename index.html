@@ -114,6 +114,13 @@
           placeholder="Filtra por hashtag…"
           class="w-full p-2 border border-slate-300 rounded-lg"
         />
+        <select
+          id="orden"
+          class="w-full p-2 border border-slate-300 rounded-lg"
+        >
+          <option value="recientes">Más recientes</option>
+          <option value="antiguas">Más antiguas</option>
+        </select>
         <aside id="panel-stats" class="bg-slate-100 rounded-lg p-3"></aside>
         <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2"></ul>
         <div
@@ -135,12 +142,27 @@
       </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+    <div
+      id="modal"
+      class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center"
+      >
         <p id="modal-texto" class="text-slate-700 mb-5">¿Seguro?</p>
         <div class="flex gap-2 justify-center">
-          <button id="modal-cancelar"  class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Cancelar</button>
-          <button id="modal-confirmar" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
+          <button
+            id="modal-cancelar"
+            class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+          >
+            Cancelar
+          </button>
+          <button
+            id="modal-confirmar"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+          >
+            Eliminar
+          </button>
         </div>
       </div>
     </div>
