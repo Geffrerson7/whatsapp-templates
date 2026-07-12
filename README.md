@@ -2,6 +2,8 @@
 
 Una aplicación web sencilla desarrollada con JavaScript para crear, administrar y utilizar plantillas reutilizables de mensajes para WhatsApp.
 
+La aplicación permite crear, editar, eliminar, filtrar y ordenar plantillas de mensajes. Además, toda la información se guarda automáticamente en el navegador mediante **Local Storage**, por lo que las plantillas y el filtro permanecen disponibles incluso después de recargar la página.
+
 ## Demo
 
 🌐 **Aplicación desplegada:** [Ver aplicación](https://geffrerson7.github.io/whatsapp-templates/)
@@ -13,6 +15,23 @@ Una aplicación web sencilla desarrollada con JavaScript para crear, administrar
 - Mostrar las plantillas como tarjetas.
 - Generar mensajes personalizados reemplazando las variables de la plantilla.
 - Copiar los mensajes generados al portapapeles.
+
+## Arquitectura modular (ES Modules)
+
+La aplicación está organizada utilizando **ES Modules (ESM)**, separando las responsabilidades en distintos archivos para facilitar el mantenimiento y la reutilización del código.
+
+- **`app.js`**: punto de entrada de la aplicación. Inicializa el estado, recupera la información almacenada y realiza el primer renderizado.
+- **`state.js`**: almacena el estado global de la aplicación y contiene funciones puras relacionadas con las plantillas, como el filtrado, ordenamiento y generación de estadísticas.
+- **`storage.js`**: administra la persistencia de datos mediante Local Storage, encargándose de guardar y recuperar las plantillas y el filtro.
+- **`ui.js`**: contiene el renderizado de la interfaz y los eventos que permiten interactuar con la aplicación.
+
+## Persistencia de datos
+
+La aplicación guarda automáticamente la información utilizando **Local Storage** del navegador.
+
+- Las plantillas se almacenan utilizando `JSON.stringify()` y se recuperan con `JSON.parse()`.
+- El filtro de búsqueda se guarda directamente como texto, ya que Local Storage almacena cadenas de texto.
+- Si los datos almacenados están corruptos, la aplicación utiliza `try/catch` al ejecutar `JSON.parse()` para evitar errores y comenzar con una lista vacía, manteniendo la aplicación funcional.
 
 ## Clase `Template`
 
@@ -31,7 +50,7 @@ Ejemplo:
 const plantilla = new Template(
   "Bienvenida",
   "Hola {nombre}, gracias por comprar {producto}.",
-  "#ventas"
+  "#ventas",
 );
 ```
 
@@ -119,9 +138,7 @@ Reemplaza todas las apariciones de una subcadena.
 Ejemplo:
 
 ```javascript
-mensaje
-  .replaceAll("{nombre}", nombre)
-  .replaceAll("{producto}", producto);
+mensaje.replaceAll("{nombre}", nombre).replaceAll("{producto}", producto);
 ```
 
 Se utiliza para generar mensajes personalizados reemplazando las variables de la plantilla con los valores proporcionados por el usuario.
@@ -152,9 +169,9 @@ Cuando el usuario hace clic sobre un botón, el evento se propaga hasta la lista
 
 Este enfoque permite:
 
-* Reducir la cantidad de listeners registrados.
-* Hacer que los botones de plantillas agregadas dinámicamente funcionen automáticamente.
-* Mantener el código más simple y fácil de mantener.
+- Reducir la cantidad de listeners registrados.
+- Hacer que los botones de plantillas agregadas dinámicamente funcionen automáticamente.
+- Mantener el código más simple y fácil de mantener.
 
 ## Función `contarPorHashtag()`
 
@@ -166,7 +183,7 @@ Ejemplo:
 contarPorHashtag([
   { hashtag: "#ventas" },
   { hashtag: "#ventas" },
-  { hashtag: "#soporte" }
+  { hashtag: "#soporte" },
 ]);
 ```
 
@@ -183,8 +200,8 @@ Esta función no modifica el estado de la aplicación ni produce efectos secunda
 
 Se utiliza para:
 
-* Mostrar el número total de plantillas por hashtag en el panel de estadísticas.
-* Calcular cuál es el hashtag más utilizado mediante la función `hashtagMasUsado()`.
+- Mostrar el número total de plantillas por hashtag en el panel de estadísticas.
+- Calcular cuál es el hashtag más utilizado mediante la función `hashtagMasUsado()`.
 
 ## Persistencia del estado
 
