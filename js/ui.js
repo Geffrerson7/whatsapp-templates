@@ -23,8 +23,8 @@ const lista = document.getElementById("listaPlantillas");
 const selector = document.getElementById("selector");
 const salida = document.getElementById("mensaje-final");
 const botonCancelarEdicion = document.getElementById("btn-cancelar");
-const modal = document.getElementById("modal");
 const btnVaciar = document.getElementById("btn-vaciar");
+const btnLimpiarFiltro = document.getElementById("btn-limpiar-filtro");
 
 // ===============================
 // Funciones CRUD
@@ -246,6 +246,12 @@ document
     state.filtro = evento.target.value;
     render();
   });
+
+btnLimpiarFiltro.addEventListener("click", function () {
+  state.filtro = "";
+  document.getElementById("buscador").value = "";
+  render();
+});
 
 document
   .getElementById("modal-cancelar")
