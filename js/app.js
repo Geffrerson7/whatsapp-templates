@@ -92,13 +92,6 @@ function agregarPlantilla(titulo, mensaje, hashtag) {
   state.plantillas.push(nueva);
 }
 
-function eliminarPlantilla(id) {
-  state.plantillas = state.plantillas.filter(
-    (plantilla) => plantilla.id !== id,
-  );
-  render();
-}
-
 function cargarEnFormulario(id) {
   const plantilla = state.plantillas.find((plantilla) => plantilla.id === id);
   titulo.value = plantilla.titulo;
