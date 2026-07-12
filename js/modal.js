@@ -23,3 +23,10 @@ export function confirmarAccion() {
   modal.classList.add("hidden");
   accionPendiente = null;
 }
+
+modal.addEventListener("click", function (evento) {
+  if (evento.target === modal) {
+    modal.classList.add("hidden");
+    accionPendiente = null;
+  }
+});
