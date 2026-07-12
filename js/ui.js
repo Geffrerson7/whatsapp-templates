@@ -254,3 +254,8 @@ document
 document
   .getElementById("modal-confirmar")
   .addEventListener("click", confirmarAccion);
+
+document.getElementById("orden").addEventListener("change", function (evento) {
+  state.orden = evento.target.value;
+  render();
+});
