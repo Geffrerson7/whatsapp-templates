@@ -12,6 +12,7 @@ import {
   pedirConfirmacion,
   cancelarConfirmacion,
   confirmarAccion,
+  mostrarMensaje,
 } from "./modal.js";
 
 // ===============================
@@ -240,7 +241,7 @@ form.addEventListener("submit", function (evento) {
   const mensajeTexto = mensaje.value.trim();
 
   if (tituloTexto.length === 0 || mensajeTexto.length === 0) {
-    alert("Título y mensaje son obligatorios");
+    mostrarMensaje("Título y mensaje son obligatorios.");
     return;
   }
 
