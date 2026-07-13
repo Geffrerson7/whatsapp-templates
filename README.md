@@ -20,11 +20,12 @@ La aplicación permite crear, editar, eliminar, filtrar y ordenar plantillas de 
 
 La aplicación está organizada utilizando **ES Modules (ESM)**, separando las responsabilidades en distintos archivos para facilitar el mantenimiento y la reutilización del código.
 
-- **`app.js`**: punto de entrada de la aplicación. Inicializa el estado, recupera la información almacenada y realiza el primer renderizado.
+- **`app.js`**: punto de entrada de la aplicación. Inicializa el tema, recupera el estado almacenado y realiza el primer renderizado.
 - **`state.js`**: almacena el estado global de la aplicación y contiene funciones puras relacionadas con las plantillas, como el filtrado, ordenamiento y generación de estadísticas.
 - **`storage.js`**: administra la persistencia de datos mediante Local Storage, encargándose de guardar y recuperar las plantillas y el filtro.
 - **`ui.js`**: contiene el renderizado de la interfaz y los eventos que permiten interactuar con la aplicación.
 - **`modal.js`**: administra la lógica del modal de confirmación, incluyendo su apertura, cierre y la ejecución de acciones que requieren la confirmación del usuario.
+- **`darkMode.js`**: inicializa el tema de la aplicación. Recupera la preferencia guardada en Local Storage y, si no existe, utiliza la preferencia del sistema operativo mediante `prefers-color-scheme` para aplicar automáticamente el modo claro u oscuro.
 
 ## Persistencia de datos
 
