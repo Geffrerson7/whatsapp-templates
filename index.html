@@ -10,10 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: "class",
         theme: {
           extend: {
             colors: {
@@ -33,11 +34,58 @@
       };
     </script>
   </head>
-  <body class="bg-paper text-ink min-h-screen p-6">
-    <h1 class="font-display text-3xl font-semibold text-center text-ink mb-1">
+  <body
+    class="bg-paper dark:bg-ink text-ink dark:text-paper min-h-screen p-6 transition-colors duration-300"
+  >
+    <button
+      id="btn-tema"
+      type="button"
+      aria-label="Cambiar tema"
+      class="fixed top-4 right-4 z-40 p-2 rounded-full border border-thread dark:border-white/10 bg-white dark:bg-white/5 text-ink dark:text-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition"
+    >
+      <svg
+        id="icono-luna"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="block dark:hidden"
+      >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1 -9 -9z" />
+      </svg>
+      <svg
+        id="icono-sol"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="hidden dark:block"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+        />
+      </svg>
+    </button>
+
+    <h1
+      class="font-display text-3xl font-semibold text-center text-ink dark:text-paper mb-1"
+    >
       Mis Plantillas
     </h1>
-    <p class="text-center text-xs font-mono text-ink/50 mb-6 tracking-wide">
+    <p
+      class="text-center text-xs font-mono text-ink/50 dark:text-paper/50 mb-6 tracking-wide"
+    >
       crea · guarda · envía
     </p>
 
@@ -47,25 +95,25 @@
       <div class="grid gap-6 self-start">
         <form
           id="form-plantilla"
-          class="bg-white p-4 rounded-2xl border border-thread shadow-sm grid gap-2"
+          class="bg-white dark:bg-[#1A1C15] p-4 rounded-2xl border border-thread dark:border-white/10 shadow-sm grid gap-2"
         >
           <input
             id="titulo"
             type="text"
             placeholder="Título"
-            class="p-2 border border-thread rounded-lg bg-paper/50 placeholder:text-ink/40"
+            class="p-2 border border-thread dark:border-white/10 rounded-lg bg-paper/50 dark:bg-white/5 text-ink dark:text-paper placeholder:text-ink/40 dark:placeholder:text-paper/30"
           />
           <input
             id="hashtag"
             type="text"
             placeholder="hashtag"
-            class="p-2 border border-thread rounded-lg bg-paper/50 font-mono text-sm placeholder:text-ink/40"
+            class="p-2 border border-thread dark:border-white/10 rounded-lg bg-paper/50 dark:bg-white/5 text-ink dark:text-paper font-mono text-sm placeholder:text-ink/40 dark:placeholder:text-paper/30"
           />
           <textarea
             id="mensaje"
             rows="3"
             placeholder="Mensaje (usa {nombre} y {producto})"
-            class="p-2 border border-thread rounded-lg bg-paper/50 placeholder:text-ink/40"
+            class="p-2 border border-thread dark:border-white/10 rounded-lg bg-paper/50 dark:bg-white/5 text-ink dark:text-paper placeholder:text-ink/40 dark:placeholder:text-paper/30"
           ></textarea>
           <button
             class="bg-tick text-white py-2 rounded-full font-medium hover:bg-tick/90 transition"
@@ -75,59 +123,67 @@
           <button
             type="button"
             id="btn-cancelar"
-            class="px-4 py-2 border border-ink/20 text-ink rounded-full hover:bg-ink hover:text-paper transition hidden"
+            class="px-4 py-2 border border-ink/20 dark:border-paper/20 text-ink dark:text-paper rounded-full hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition hidden"
           >
             Cancelar
           </button>
         </form>
         <section
           id="generador"
-          class="bg-white p-4 rounded-2xl border border-thread shadow-sm grid gap-3"
+          class="bg-white dark:bg-[#1A1C15] p-4 rounded-2xl border border-thread dark:border-white/10 shadow-sm grid gap-3"
         >
-          <h2 class="font-display font-semibold text-ink">✨ Usar plantilla</h2>
+          <h2 class="font-display font-semibold text-ink dark:text-paper">
+            ✨ Usar plantilla
+          </h2>
 
-          <label class="grid gap-1 text-xs font-mono text-ink/50">
+          <label
+            class="grid gap-1 text-xs font-mono text-ink/50 dark:text-paper/50"
+          >
             Plantilla
             <select
               id="selector"
-              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
+              class="p-2 border border-thread dark:border-white/10 rounded-lg text-ink dark:text-paper bg-paper/50 dark:bg-white/5"
             ></select>
           </label>
 
-          <label class="grid gap-1 text-xs font-mono text-ink/50">
+          <label
+            class="grid gap-1 text-xs font-mono text-ink/50 dark:text-paper/50"
+          >
             Nombre real
             <input
               id="valorNombre"
               type="text"
               placeholder="ej. Ana"
-              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
+              class="p-2 border border-thread dark:border-white/10 rounded-lg text-ink dark:text-paper bg-paper/50 dark:bg-white/5 placeholder:text-ink/40 dark:placeholder:text-paper/30"
             />
           </label>
 
-          <label class="grid gap-1 text-xs font-mono text-ink/50">
+          <label
+            class="grid gap-1 text-xs font-mono text-ink/50 dark:text-paper/50"
+          >
             Producto
             <input
               id="valorProducto"
               type="text"
               placeholder="ej. Laptop Gamer"
-              class="p-2 border border-thread rounded-lg text-ink bg-paper/50"
+              class="p-2 border border-thread dark:border-white/10 rounded-lg text-ink dark:text-paper bg-paper/50 dark:bg-white/5 placeholder:text-ink/40 dark:placeholder:text-paper/30"
             />
           </label>
 
           <button
             id="btn-generar"
-            class="bg-ink hover:bg-ink/85 text-paper font-medium py-2 rounded-full transition"
+            class="bg-ink dark:bg-paper hover:bg-ink/85 dark:hover:bg-paper/85 text-paper dark:text-ink font-medium py-2 rounded-full transition"
           >
             Generar
           </button>
 
           <!-- Resultado: burbuja de chat con el mensaje final -->
           <div
-            class="burbuja bg-white border border-thread p-3 grid gap-2 ml-1"
+            class="burbuja bg-white dark:bg-[#1A1C15] border border-thread dark:border-white/10 p-3 grid gap-2 ml-1"
           >
             <p
               id="mensaje-final"
-              class="text-sm text-ink whitespace-pre-wrap min-h-[1.5rem]"
+              class="text-sm text-ink dark:text-paper whitespace-pre-wrap min-h-[1.5rem]"
             ></p>
             <button
               id="btn-copiar"
@@ -146,13 +202,13 @@
             id="buscador"
             type="text"
             placeholder="Filtra por hashtag…"
-            class="flex-1 p-2 border border-thread rounded-full bg-white placeholder:text-ink/40"
+            class="flex-1 p-2 border border-thread dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-ink dark:text-paper placeholder:text-ink/40 dark:placeholder:text-paper/30"
           />
 
           <button
             id="btn-limpiar-filtro"
             type="button"
-            class="group px-3 border border-thread rounded-full bg-white hover:bg-ink hover:text-paper hover:border-ink transition-all duration-200"
+            class="group px-3 border border-thread dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-ink dark:text-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink hover:border-ink dark:hover:border-paper transition-all duration-200"
             title="Limpiar filtro"
           >
             <svg
@@ -175,7 +231,7 @@
         </div>
         <select
           id="orden"
-          class="w-full p-2 border border-thread rounded-full bg-white text-sm"
+          class="w-full p-2 border border-thread dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-ink dark:text-paper text-sm"
         >
           <option value="recientes">Más recientes</option>
           <option value="antiguas">Más antiguas</option>
@@ -183,15 +239,15 @@
         </select>
         <aside
           id="panel-stats"
-          class="bg-white border border-thread rounded-2xl p-3"
+          class="bg-white dark:bg-[#1A1C15] border border-thread dark:border-white/10 rounded-2xl p-3"
         ></aside>
         <ul id="listaPlantillas" class="grid gap-4 sm:grid-cols-2"></ul>
         <div
-          class="flex items-center justify-between border-t border-thread pt-3 mt-1"
+          class="flex items-center justify-between border-t border-thread dark:border-white/10 pt-3 mt-1"
         >
           <p
             id="estado"
-            class="text-xs font-mono text-ink/60 bg-white border border-thread px-2.5 py-1 rounded-full"
+            class="text-xs font-mono text-ink/60 dark:text-paper/60 bg-white dark:bg-white/5 border border-thread dark:border-white/10 px-2.5 py-1 rounded-full"
           >
             Listo
           </p>
@@ -210,13 +266,13 @@
       class="hidden fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4"
     >
       <div
-        class="bg-paper p-6 rounded-2xl border border-thread shadow-xl max-w-sm w-full text-center"
+        class="bg-paper dark:bg-[#1A1C15] p-6 rounded-2xl border border-thread dark:border-white/10 shadow-xl max-w-sm w-full text-center"
       >
-        <p id="modal-texto" class="text-ink mb-5">¿Seguro?</p>
+        <p id="modal-texto" class="text-ink dark:text-paper mb-5">¿Seguro?</p>
         <div class="flex gap-2 justify-center">
           <button
             id="modal-cancelar"
-            class="px-4 py-2 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-paper transition"
+            class="px-4 py-2 rounded-full border border-ink/20 dark:border-paper/20 text-ink dark:text-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition"
           >
             Cancelar
           </button>
