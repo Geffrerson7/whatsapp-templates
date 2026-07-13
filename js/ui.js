@@ -28,6 +28,16 @@ const btnLimpiarFiltro = document.getElementById("btn-limpiar-filtro");
 const btnCopiar = document.getElementById("btn-copiar");
 const btnCopiarTexto = document.getElementById("btn-copiar-texto");
 const btnCopiarCheck = document.getElementById("btn-copiar-check");
+const btnTema = document.getElementById("btn-tema");
+
+// ===============================
+// Modo oscuro
+// ===============================
+
+btnTema.addEventListener("click", function () {
+  const esOscuro = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("theme", esOscuro ? "dark" : "light");
+});
 
 // ===============================
 // Funciones CRUD
@@ -75,13 +85,13 @@ function renderStats() {
   const etiquetas = Object.entries(porTag)
     .map(
       ([hashtag, cantidad]) =>
-        `<span class="text-xs font-mono bg-paper border border-thread px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`,
+        `<span class="text-xs font-mono bg-paper dark:bg-white/5 border border-thread dark:border-white/10 px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`,
     )
     .join("");
   document.getElementById("panel-stats").innerHTML = `
     <div class="flex flex-col gap-2">
       <div class="flex items-center gap-2 flex-wrap">
-        <span class="font-display text-sm font-semibold text-ink">
+        <span class="font-display text-sm font-semibold text-ink dark:text-paper">
           ${total} plantilla(s)
         </span>
 
@@ -90,12 +100,12 @@ function renderStats() {
 
       ${
         masUsado
-          ? `<p class="text-sm text-ink/70">
+          ? `<p class="text-sm text-ink/70 dark:text-paper/70">
               Hashtag más usado:
-              <strong class="font-mono text-ink">${masUsado.hashtag}</strong>
+              <strong class="font-mono text-ink dark:text-paper">${masUsado.hashtag}</strong>
               (${masUsado.cantidad})
             </p>`
-          : `<p class="text-sm text-ink/50">
+          : `<p class="text-sm text-ink/50 dark:text-paper/50">
               Aún no hay plantillas.
             </p>`
       }
@@ -123,7 +133,7 @@ export function render() {
         ? "Aún no tienes plantillas. ¡Crea la primera!"
         : "No se encontraron plantillas con ese filtro.";
     lista.innerHTML = `
-      <li class="sm:col-span-2 text-center text-ink/40 py-10">
+      <li class="sm:col-span-2 text-center text-ink/40 dark:text-paper/40 py-10">
         <div class="text-4xl mb-2">📭</div>
         ${vacio}
       </li>`;
@@ -140,28 +150,28 @@ export function render() {
           ? plantilla.mensaje.slice(0, 60) + "…"
           : plantilla.mensaje;
       li.className =
-        "burbuja bg-white border border-thread p-4 ml-1 hover:border-ink/30 transition-colors";
+        "burbuja bg-white dark:bg-[#1A1C15] border border-thread dark:border-white/10 p-4 ml-1 hover:border-ink/30 dark:hover:border-paper/30 transition-colors";
       li.innerHTML = `
       <div class="flex items-start justify-between gap-2">
-        <strong class="font-display text-ink">${plantilla.titulo}</strong>
+        <strong class="font-display text-ink dark:text-paper">${plantilla.titulo}</strong>
 
         <div class="text-right">
-          <p class="text-[11px] font-mono text-ink/40">
+          <p class="text-[11px] font-mono text-ink/40 dark:text-paper/40">
             ${fechaTexto}
           </p>
 
-          <p class="text-[11px] font-mono text-ink/40">
+          <p class="text-[11px] font-mono text-ink/40 dark:text-paper/40">
             ${fechaEdicionTexto}
           </p>
         </div>
       </div>
-      <p class="text-sm text-ink/80 mt-1">${mensajeCorto}</p>
-      <p class="text-[11px] font-mono text-ink/40 mt-1">
+      <p class="text-sm text-ink/80 dark:text-paper/80 mt-1">${mensajeCorto}</p>
+      <p class="text-[11px] font-mono text-ink/40 dark:text-paper/40 mt-1">
         ${cantidadCaracteres} caracteres
       </p>
-      <span class="inline-block text-xs font-mono bg-paper border border-thread text-ink/70 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
+      <span class="inline-block text-xs font-mono bg-paper dark:bg-white/5 border border-thread dark:border-white/10 text-ink/70 dark:text-paper/70 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
       <div class="flex gap-2 mt-3">
-        <button class="btn-editar text-xs px-2.5 py-1 rounded-full border border-ink/20 text-ink hover:bg-ink hover:text-paper transition" data-id="${plantilla.id}">Editar</button>
+        <button class="btn-editar text-xs px-2.5 py-1 rounded-full border border-ink/20 dark:border-paper/20 text-ink dark:text-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition" data-id="${plantilla.id}">Editar</button>
         <button class="btn-eliminar text-xs px-2.5 py-1 rounded-full border border-brick text-brick hover:bg-brick hover:text-white transition" data-id="${plantilla.id}">Eliminar</button>
       </div>
       `;
