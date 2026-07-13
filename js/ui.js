@@ -29,6 +29,18 @@ const btnCopiar = document.getElementById("btn-copiar");
 const btnCopiarTexto = document.getElementById("btn-copiar-texto");
 const btnCopiarCheck = document.getElementById("btn-copiar-check");
 const btnTema = document.getElementById("btn-tema");
+const btnEjemplo = document.getElementById("btn-ejemplo");
+const modalEjemplo = document.getElementById("modal-ejemplo");
+const modalEjemploCerrar = document.getElementById("modal-ejemplo-cerrar");
+const modalEjemploUsar = document.getElementById("modal-ejemplo-usar");
+
+// Valores del ejemplo mostrado en el modal, para poder volcarlos al formulario
+const EJEMPLO_PLANTILLA = {
+  titulo: "Oferta especial",
+  hashtag: "#ofertaflash",
+  mensaje:
+    "Hola {nombre}, en esta oportunidad llévate este {producto} a mitad de precio 🔥",
+};
 
 // ===============================
 // Modo oscuro
@@ -37,6 +49,37 @@ const btnTema = document.getElementById("btn-tema");
 btnTema.addEventListener("click", function () {
   const esOscuro = document.documentElement.classList.toggle("dark");
   localStorage.setItem("theme", esOscuro ? "dark" : "light");
+});
+
+// ===============================
+// Modal: ejemplo de plantilla
+// ===============================
+
+function cerrarModalEjemplo() {
+  modalEjemplo.classList.add("hidden");
+}
+
+btnEjemplo.addEventListener("click", function () {
+  modalEjemplo.classList.remove("hidden");
+});
+
+modalEjemploUsar.addEventListener("click", function () {
+  titulo.value = EJEMPLO_PLANTILLA.titulo;
+  hashtag.value = EJEMPLO_PLANTILLA.hashtag;
+  mensaje.value = EJEMPLO_PLANTILLA.mensaje;
+  cerrarModalEjemplo();
+});
+
+modalEjemploCerrar.addEventListener("click", cerrarModalEjemplo);
+
+modalEjemplo.addEventListener("click", function (evento) {
+  if (evento.target === modalEjemplo) cerrarModalEjemplo();
+});
+
+document.addEventListener("keydown", function (evento) {
+  if (evento.key === "Escape" && !modalEjemplo.classList.contains("hidden")) {
+    cerrarModalEjemplo();
+  }
 });
 
 // ===============================
@@ -235,8 +278,6 @@ document.getElementById("btn-generar").addEventListener("click", function () {
 
   // Reinicia el estado del botón copiar cada vez que se genera un mensaje nuevo
   btnCopiarTexto.textContent = "Copiar";
-  btnCopiar.classList.remove("text-tick");
-  btnCopiar.classList.add("text-tick");
   btnCopiarCheck.classList.remove("tick-animado");
   btnCopiarCheck.style.color = "";
 });

@@ -116,6 +116,13 @@
             class="p-2 border border-thread dark:border-white/10 rounded-lg bg-paper/50 dark:bg-white/5 text-ink dark:text-paper placeholder:text-ink/40 dark:placeholder:text-paper/30"
           ></textarea>
           <button
+            type="button"
+            id="btn-ejemplo"
+            class="justify-self-start text-xs font-mono text-tick hover:text-tick/80 flex items-center gap-1 -mt-1"
+          >
+            👁️ Ver ejemplo
+          </button>
+          <button
             class="bg-tick text-white py-2 rounded-full font-medium hover:bg-tick/90 transition"
           >
             Agregar plantilla
@@ -281,6 +288,88 @@
             class="px-4 py-2 rounded-full bg-brick text-white hover:bg-brick/85 transition"
           >
             Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="modal-ejemplo"
+      class="hidden fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-paper dark:bg-[#1A1C15] p-6 rounded-2xl border border-thread dark:border-white/10 shadow-xl max-w-sm w-full"
+      >
+        <h3 class="font-display font-semibold text-ink dark:text-paper mb-4">
+          👁️ Ejemplo de plantilla
+        </h3>
+
+        <div class="grid gap-4">
+          <div>
+            <p
+              class="text-[11px] font-mono text-ink/40 dark:text-paper/40 mb-1"
+            >
+              Título
+            </p>
+            <p
+              id="modal-ejemplo-titulo"
+              class="font-display text-ink dark:text-paper"
+            >
+              Oferta especial
+            </p>
+          </div>
+
+          <div>
+            <p
+              class="text-[11px] font-mono text-ink/40 dark:text-paper/40 mb-1"
+            >
+              Hashtag
+            </p>
+            <span
+              id="modal-ejemplo-hashtag"
+              class="inline-block text-xs font-mono bg-paper dark:bg-white/5 border border-thread dark:border-white/10 text-ink/70 dark:text-paper/70 px-2 py-0.5 rounded-full"
+            >
+              #ofertaflash
+            </span>
+          </div>
+
+          <div>
+            <p
+              class="text-[11px] font-mono text-ink/40 dark:text-paper/40 mb-1"
+            >
+              Mensaje
+            </p>
+            <div
+              class="burbuja bg-white dark:bg-[#1A1C15] border border-thread dark:border-white/10 p-3 ml-1"
+            >
+              <p
+                id="modal-ejemplo-mensaje"
+                class="text-sm text-ink dark:text-paper"
+              >
+                Hola {nombre}, en esta oportunidad llévate este {producto} a
+                mitad de precio 🔥
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-[11px] font-mono text-ink/40 dark:text-paper/40 mt-4">
+          * {nombre} y {producto} se reemplazan automáticamente al generar el
+          mensaje final.
+        </p>
+
+        <div class="flex gap-2 justify-end mt-4">
+          <button
+            id="modal-ejemplo-cerrar"
+            class="px-4 py-2 rounded-full border border-ink/20 dark:border-paper/20 text-ink dark:text-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition"
+          >
+            Cerrar
+          </button>
+          <button
+            id="modal-ejemplo-usar"
+            class="px-4 py-2 rounded-full bg-tick text-white hover:bg-tick/90 transition"
+          >
+            Usar este ejemplo
           </button>
         </div>
       </div>
