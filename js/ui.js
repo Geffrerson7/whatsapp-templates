@@ -33,6 +33,9 @@ const btnEjemplo = document.getElementById("btn-ejemplo");
 const modalEjemplo = document.getElementById("modal-ejemplo");
 const modalEjemploCerrar = document.getElementById("modal-ejemplo-cerrar");
 const modalEjemploUsar = document.getElementById("modal-ejemplo-usar");
+const btnLimpiarGenerador = document.getElementById("btn-limpiar-generador");
+const valorNombre = document.getElementById("valorNombre");
+const valorProducto = document.getElementById("valorProducto");
 
 // Valores del ejemplo mostrado en el modal, para poder volcarlos al formulario
 const EJEMPLO_PLANTILLA = {
@@ -342,4 +345,12 @@ document
 document.getElementById("orden").addEventListener("change", function (evento) {
   state.orden = evento.target.value;
   render();
+});
+
+btnLimpiarGenerador.addEventListener("click", function () {
+  valorNombre.value = "";
+  valorProducto.value = "";
+  salida.textContent = "";
+
+  valorNombre.focus();
 });
