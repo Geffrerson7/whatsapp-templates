@@ -1,5 +1,8 @@
+const THEME_KEY = "theme";
+
 export function initTheme() {
-  const guardado = localStorage.getItem("theme");
+  const guardado = localStorage.getItem(THEME_KEY);
+
   const prefiereOscuro = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
